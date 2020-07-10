@@ -93,7 +93,7 @@ function reducer(state: State, action: Action): Update<State, Action> {
         case 'SearchRequestError':
             return update([
                 ...state,
-                searchRequst: {
+                searchRequest: {
                     tag: 'Error',
                     error: action.error
                 }
