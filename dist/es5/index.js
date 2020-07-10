@@ -8,13 +8,13 @@ function useSideEffectReducer(createInitialState, reducer) {
         var _b = tslib_1.__read(_a, 2), state = _b[0], sideEffects = _b[1];
         var result = reducer(state, action);
         switch (result.tag) {
-            case 0 /* NoUpdate */:
+            case 'NoUpdate':
                 return [state, sideEffects];
-            case 1 /* Update */:
+            case 'Update':
                 return [result.state, sideEffects];
-            case 2 /* SideEffect */:
+            case 'SideEffect':
                 return [state, tslib_1.__spread(sideEffects, [result.sideEffect])];
-            case 3 /* UpdateWithSideEffect */:
+            case 'UpdateWithSideEffect':
                 return [result.state, tslib_1.__spread(sideEffects, [result.sideEffect])];
         }
     }
@@ -40,26 +40,26 @@ function useSideEffectReducer(createInitialState, reducer) {
 }
 exports.useSideEffectReducer = useSideEffectReducer;
 function noUpdate() {
-    return { tag: 0 /* NoUpdate */ };
+    return { tag: 'NoUpdate' };
 }
 exports.noUpdate = noUpdate;
 function update(state) {
     return {
-        tag: 1 /* Update */,
+        tag: 'Update',
         state: state
     };
 }
 exports.update = update;
 function sideEffect(sideEffect) {
     return {
-        tag: 2 /* SideEffect */,
+        tag: 'SideEffect',
         sideEffect: sideEffect
     };
 }
 exports.sideEffect = sideEffect;
 function updateWithSideEffect(state, sideEffect) {
     return {
-        tag: 3 /* UpdateWithSideEffect */,
+        tag: 'UpdateWithSideEffect',
         state: state,
         sideEffect: sideEffect
     };

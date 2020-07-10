@@ -3,13 +3,13 @@ export function useSideEffectReducer(createInitialState, reducer) {
     function innerReducer([state, sideEffects], action) {
         const result = reducer(state, action);
         switch (result.tag) {
-            case 0 /* NoUpdate */:
+            case 'NoUpdate':
                 return [state, sideEffects];
-            case 1 /* Update */:
+            case 'Update':
                 return [result.state, sideEffects];
-            case 2 /* SideEffect */:
+            case 'SideEffect':
                 return [state, [...sideEffects, result.sideEffect]];
-            case 3 /* UpdateWithSideEffect */:
+            case 'UpdateWithSideEffect':
                 return [result.state, [...sideEffects, result.sideEffect]];
         }
     }
@@ -23,23 +23,23 @@ export function useSideEffectReducer(createInitialState, reducer) {
     return [state, dispatch];
 }
 export function noUpdate() {
-    return { tag: 0 /* NoUpdate */ };
+    return { tag: 'NoUpdate' };
 }
 export function update(state) {
     return {
-        tag: 1 /* Update */,
+        tag: 'Update',
         state
     };
 }
 export function sideEffect(sideEffect) {
     return {
-        tag: 2 /* SideEffect */,
+        tag: 'SideEffect',
         sideEffect
     };
 }
 export function updateWithSideEffect(state, sideEffect) {
     return {
-        tag: 3 /* UpdateWithSideEffect */,
+        tag: 'UpdateWithSideEffect',
         state,
         sideEffect
     };

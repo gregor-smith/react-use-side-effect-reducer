@@ -1,6 +1,5 @@
 import { useEffect, useReducer, Dispatch } from 'react'
 
-
 export { Dispatch } from 'react'
 
 
@@ -10,23 +9,15 @@ export type SideEffect<TState, TAction> = (
 ) => void
 
 
-export const enum Tag {
-    NoUpdate,
-    Update,
-    SideEffect,
-    UpdateWithSideEffect
-}
-
-
 export type Update<TState, TAction> =
-    | { tag: Tag.NoUpdate }
-    | { tag: Tag.Update, state: TState }
+    | { tag: 'NoUpdate' }
+    | { tag: 'Update', state: TState }
     | {
-        tag: Tag.SideEffect,
+        tag: 'SideEffect',
         sideEffect: SideEffect<TState, TAction>
     }
     | {
-        tag: Tag.UpdateWithSideEffect
+        tag: 'UpdateWithSideEffect'
         state: TState
         sideEffect: SideEffect<TState, TAction>
     }
@@ -52,13 +43,13 @@ export function useSideEffectReducer<TState, TAction>(
     ): StateTuple<TState, TAction> {
         const result = reducer(state, action)
         switch (result.tag) {
-            case Tag.NoUpdate:
+            case 'NoUpdate':
                 return [ state, sideEffects ]
-            case Tag.Update:
+            case 'Update':
                 return [ result.state, sideEffects ]
-            case Tag.SideEffect:
+            case 'SideEffect':
                 return [ state, [ ...sideEffects, result.sideEffect ] ]
-            case Tag.UpdateWithSideEffect:
+            case 'UpdateWithSideEffect':
                 return [ result.state, [ ...sideEffects, result.sideEffect ] ]
         }
     }
@@ -84,13 +75,13 @@ export function useSideEffectReducer<TState, TAction>(
 
 
 export function noUpdate<TState, TAction>(): Update<TState, TAction> {
-    return { tag: Tag.NoUpdate }
+    return { tag: 'NoUpdate' }
 }
 
 
 export function update<TState, TAction>(state: TState): Update<TState, TAction> {
     return {
-        tag: Tag.Update,
+        tag: 'Update',
         state
     }
 }
@@ -100,7 +91,7 @@ export function sideEffect<TState, TAction>(
     sideEffect: SideEffect<TState, TAction>
 ): Update<TState, TAction> {
     return {
-        tag: Tag.SideEffect,
+        tag: 'SideEffect',
         sideEffect
     }
 }
@@ -111,7 +102,7 @@ export function updateWithSideEffect<TState, TAction>(
     sideEffect: SideEffect<TState, TAction>
 ): Update<TState, TAction> {
     return {
-        tag: Tag.UpdateWithSideEffect,
+        tag: 'UpdateWithSideEffect',
         state,
         sideEffect
     }

@@ -1,22 +1,16 @@
 import { Dispatch } from 'react';
 export { Dispatch } from 'react';
 export declare type SideEffect<TState, TAction> = (dispatch: Dispatch<TAction>, state: TState) => void;
-export declare const enum Tag {
-    NoUpdate = 0,
-    Update = 1,
-    SideEffect = 2,
-    UpdateWithSideEffect = 3
-}
 export declare type Update<TState, TAction> = {
-    tag: Tag.NoUpdate;
+    tag: 'NoUpdate';
 } | {
-    tag: Tag.Update;
+    tag: 'Update';
     state: TState;
 } | {
-    tag: Tag.SideEffect;
+    tag: 'SideEffect';
     sideEffect: SideEffect<TState, TAction>;
 } | {
-    tag: Tag.UpdateWithSideEffect;
+    tag: 'UpdateWithSideEffect';
     state: TState;
     sideEffect: SideEffect<TState, TAction>;
 };
