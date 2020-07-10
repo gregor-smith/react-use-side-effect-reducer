@@ -17,22 +17,13 @@ const printMock = jest.fn<void, string[]>()
 
 type State = { counter: number }
 
-const enum Tag {
-    Ignore,
-    Increment,
-    Print,
-    DecrementAndPrintCount,
-    AsyncInit,
-    AsyncDone
-}
-
 type Action =
-    | { tag: Tag.Ignore }
-    | { tag: Tag.Increment }
-    | { tag: Tag.Print, message: string }
-    | { tag: Tag.DecrementAndPrintCount }
-    | { tag: Tag.AsyncInit }
-    | { tag: Tag.AsyncDone }
+    | { tag: 'Ignore' }
+    | { tag: 'Increment' }
+    | { tag: 'Print', message: string }
+    | { tag: 'DecrementAndPrintCount' }
+    | { tag: 'AsyncInit' }
+    | { tag: 'AsyncDone' }
 
 
 function renderReducer() {
@@ -41,25 +32,25 @@ function renderReducer() {
             () => ({ counter: 0 }),
             (state, action) => {
                 switch (action.tag) {
-                    case Tag.Ignore:
+                    case 'Ignore':
                         return noUpdate()
-                    case Tag.Increment:
+                    case 'Increment':
                         return update({ counter: state.counter + 1 })
-                    case Tag.Print:
+                    case 'Print':
                         return sideEffect(() => printMock(action.message))
-                    case Tag.DecrementAndPrintCount:
+                    case 'DecrementAndPrintCount':
                         return updateWithSideEffect(
                             { counter: state.counter - 1 },
                             (_dispatch, state) => printMock(String(state.counter))
                         )
-                    case Tag.AsyncInit:
+                    case 'AsyncInit':
                         return sideEffect(dispatch => {
                             setTimeout(
-                                () => dispatch({ tag: Tag.AsyncDone }),
+                                () => dispatch({ tag: 'AsyncDone' }),
                                 60 * 60 * 1000
                             )
                         })
-                    case Tag.AsyncDone:
+                    case 'AsyncDone':
                         return update({ counter: state.counter + 10 })
                 }
             }
@@ -74,7 +65,7 @@ test('no update', () => {
 
     act(() => {
         const [ , dispatch ] = result.current
-        dispatch({ tag: Tag.Ignore })
+        dispatch({ tag: 'Ignore' })
     })
 
     const [ state ] = result.current
@@ -88,7 +79,7 @@ test('update', () => {
 
     act(() => {
         const [ , dispatch ] = result.current
-        dispatch({ tag: Tag.Increment })
+        dispatch({ tag: 'Increment' })
     })
 
     const [ state ] = result.current
@@ -102,7 +93,7 @@ test('side effect', () => {
 
     act(() => {
         const [ , dispatch ] = result.current
-        dispatch({ tag: Tag.Print, message: 'hello' })
+        dispatch({ tag: 'Print', message: 'hello' })
     })
 
     const [ state ] = result.current
@@ -117,7 +108,7 @@ test('update with side effect', () => {
 
     act(() => {
         const [ , dispatch ] = result.current
-        dispatch({ tag: Tag.DecrementAndPrintCount })
+        dispatch({ tag: 'DecrementAndPrintCount' })
     })
 
     const [ state ] = result.current
@@ -132,7 +123,7 @@ test('side effect that dispatches', () => {
 
     act(() => {
         const [ , dispatch ] = result.current
-        dispatch({ tag: Tag.AsyncInit })
+        dispatch({ tag: 'AsyncInit' })
     })
 
     let [ state ] = result.current
