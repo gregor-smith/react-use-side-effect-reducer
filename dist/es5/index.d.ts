@@ -1,4 +1,5 @@
 import { Dispatch } from 'react';
+export { Dispatch } from 'react';
 export declare type SideEffect<TState, TAction> = (dispatch: Dispatch<TAction>, state: TState) => void;
 export declare const enum Tag {
     NoUpdate = 0,

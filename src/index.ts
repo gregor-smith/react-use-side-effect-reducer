@@ -1,6 +1,9 @@
 import { useEffect, useReducer, Dispatch } from 'react'
 
 
+export { Dispatch } from 'react'
+
+
 export type SideEffect<TState, TAction> = (
     dispatch: Dispatch<TAction>,
     state: TState
