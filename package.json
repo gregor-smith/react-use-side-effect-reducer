@@ -2,6 +2,7 @@
   "name": "react-use-side-effect-reducer",
   "version": "0.1.0",
   "main": "dist/es5/index.js",
+  "module": "dist/es2015/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/gregor-smith/react-use-side-effect-reducer.git"
