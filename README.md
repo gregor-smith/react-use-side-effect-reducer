@@ -91,13 +91,13 @@ function reducer(state: State, action: Action): Update<State, Action> {
                 }
             })
         case 'SearchRequestError':
-            return update([
+            return update({
                 ...state,
                 searchRequest: {
                     tag: 'Error',
                     error: action.error
                 }
-            ])
+            })
         case 'LogMessage':
             return sideEffect(() => console.log(action.message))
         case 'NotYetImplemented':
