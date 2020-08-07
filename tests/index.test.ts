@@ -27,13 +27,13 @@ type Action =
 
 
 function renderReducer() {
-    const { result } = renderHook(() =>
+    const { result, waitForNextUpdate } = renderHook(() =>
         useSideEffectReducer<State, Action>(
             () => ({ counter: 0 }),
             (state, action) => {
                 switch (action.tag) {
                     case 'Ignore':
-                        return noUpdate()
+                        return noUpdate
                     case 'Increment':
                         return update({ counter: state.counter + 1 })
                     case 'Print':
@@ -44,11 +44,11 @@ function renderReducer() {
                             (_dispatch, state) => printMock(String(state.counter))
                         )
                     case 'AsyncInit':
-                        return sideEffect(dispatch => {
-                            setTimeout(
-                                () => dispatch({ tag: 'AsyncDone' }),
-                                60 * 60 * 1000
+                        return sideEffect(async dispatch => {
+                            await new Promise(resolve =>
+                                setTimeout(resolve, 60 * 60 * 1000)
                             )
+                            dispatch({ tag: 'AsyncDone' })
                         })
                     case 'AsyncDone':
                         return update({ counter: state.counter + 10 })
@@ -56,12 +56,12 @@ function renderReducer() {
             }
         )
     )
-    return result
+    return { result, waitForNextUpdate }
 }
 
 
 test('no update', () => {
-    const result = renderReducer()
+    const { result } = renderReducer()
 
     act(() => {
         const [ , dispatch ] = result.current
@@ -75,7 +75,7 @@ test('no update', () => {
 
 
 test('update', () => {
-    const result = renderReducer()
+    const { result } = renderReducer()
 
     act(() => {
         const [ , dispatch ] = result.current
@@ -89,7 +89,7 @@ test('update', () => {
 
 
 test('side effect', () => {
-    const result = renderReducer()
+    const { result } = renderReducer()
 
     act(() => {
         const [ , dispatch ] = result.current
@@ -104,7 +104,7 @@ test('side effect', () => {
 
 
 test('update with side effect', () => {
-    const result = renderReducer()
+    const { result } = renderReducer()
 
     act(() => {
         const [ , dispatch ] = result.current
@@ -118,8 +118,8 @@ test('update with side effect', () => {
 })
 
 
-test('side effect that dispatches', () => {
-    const result = renderReducer()
+test('async side effect that dispatches', async () => {
+    const { result, waitForNextUpdate } = renderReducer()
 
     act(() => {
         const [ , dispatch ] = result.current
@@ -130,9 +130,8 @@ test('side effect that dispatches', () => {
     expect(state.counter).toBe(0)
     expect(printMock).toHaveBeenCalledTimes(0)
 
-    act(() => {
-        jest.advanceTimersByTime(60 * 60 * 1000)
-    });
+    jest.advanceTimersByTime(60 * 60 * 1000)
+    await waitForNextUpdate();
 
     [ state ] = result.current
     expect(state.counter).toBe(10)
