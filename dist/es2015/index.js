@@ -15,8 +15,8 @@ export function useSideEffectReducer(createInitialState, reducer) {
     }
     const [[state, sideEffects], dispatch] = useReducer(innerReducer, undefined, () => [createInitialState(), []]);
     useEffect(() => {
-        for (const sideEffect of sideEffects) {
-            sideEffect(dispatch, state);
+        for (let index = 0; index < sideEffects.length; index++) {
+            sideEffects[index](dispatch, state);
         }
         sideEffects.length = 0;
     }, [sideEffects]);

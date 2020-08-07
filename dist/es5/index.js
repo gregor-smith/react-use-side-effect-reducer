@@ -20,19 +20,8 @@ function useSideEffectReducer(createInitialState, reducer) {
     }
     var _a = tslib_1.__read(react_1.useReducer(innerReducer, undefined, function () { return [createInitialState(), []]; }), 2), _b = tslib_1.__read(_a[0], 2), state = _b[0], sideEffects = _b[1], dispatch = _a[1];
     react_1.useEffect(function () {
-        var e_1, _a;
-        try {
-            for (var sideEffects_1 = tslib_1.__values(sideEffects), sideEffects_1_1 = sideEffects_1.next(); !sideEffects_1_1.done; sideEffects_1_1 = sideEffects_1.next()) {
-                var sideEffect_1 = sideEffects_1_1.value;
-                sideEffect_1(dispatch, state);
-            }
-        }
-        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-        finally {
-            try {
-                if (sideEffects_1_1 && !sideEffects_1_1.done && (_a = sideEffects_1.return)) _a.call(sideEffects_1);
-            }
-            finally { if (e_1) throw e_1.error; }
+        for (var index = 0; index < sideEffects.length; index++) {
+            sideEffects[index](dispatch, state);
         }
         sideEffects.length = 0;
     }, [sideEffects]);
