@@ -39,10 +39,7 @@ function useSideEffectReducer(createInitialState, reducer) {
     return [state, dispatch];
 }
 exports.useSideEffectReducer = useSideEffectReducer;
-function noUpdate() {
-    return { tag: 'NoUpdate' };
-}
-exports.noUpdate = noUpdate;
+exports.noUpdate = { tag: 'NoUpdate' };
 function update(state) {
     return {
         tag: 'Update',

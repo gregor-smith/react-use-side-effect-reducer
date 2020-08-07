@@ -22,9 +22,7 @@ export function useSideEffectReducer(createInitialState, reducer) {
     }, [sideEffects]);
     return [state, dispatch];
 }
-export function noUpdate() {
-    return { tag: 'NoUpdate' };
-}
+export const noUpdate = { tag: 'NoUpdate' };
 export function update(state) {
     return {
         tag: 'Update',
