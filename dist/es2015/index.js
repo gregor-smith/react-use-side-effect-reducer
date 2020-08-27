@@ -42,4 +42,13 @@ export function updateWithSideEffect(state, sideEffect) {
         sideEffect
     };
 }
+export function getSideEffect(update) {
+    switch (update.tag) {
+        case 'SideEffect':
+        case 'UpdateWithSideEffect':
+            return update.sideEffect;
+        default:
+            return null;
+    }
+}
 //# sourceMappingURL=index.js.map

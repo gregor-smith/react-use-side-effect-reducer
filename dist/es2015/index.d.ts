@@ -24,3 +24,4 @@ export declare const noUpdate: NoUpdate;
 export declare function update<TState>(state: TState): RegularUpdate<TState>;
 export declare function sideEffect<TState, TAction>(sideEffect: SideEffect<TState, TAction>): SideEffectUpdate<TState, TAction>;
 export declare function updateWithSideEffect<TState, TAction>(state: TState, sideEffect: SideEffect<TState, TAction>): UpdateWithSideEffect<TState, TAction>;
+export declare function getSideEffect<TState, TAction>(update: Update<TState, TAction>): SideEffect<TState, TAction> | null;

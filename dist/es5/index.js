@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateWithSideEffect = exports.sideEffect = exports.update = exports.noUpdate = exports.useSideEffectReducer = void 0;
+exports.getSideEffect = exports.updateWithSideEffect = exports.sideEffect = exports.update = exports.noUpdate = exports.useSideEffectReducer = void 0;
 var tslib_1 = require("tslib");
 var react_1 = require("react");
 function useSideEffectReducer(createInitialState, reducer) {
@@ -51,4 +51,14 @@ function updateWithSideEffect(state, sideEffect) {
     };
 }
 exports.updateWithSideEffect = updateWithSideEffect;
+function getSideEffect(update) {
+    switch (update.tag) {
+        case 'SideEffect':
+        case 'UpdateWithSideEffect':
+            return update.sideEffect;
+        default:
+            return null;
+    }
+}
+exports.getSideEffect = getSideEffect;
 //# sourceMappingURL=index.js.map
