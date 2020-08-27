@@ -109,3 +109,16 @@ export function updateWithSideEffect<TState, TAction>(
         sideEffect
     }
 }
+
+
+export function getSideEffect<TState, TAction>(
+    update: Update<TState, TAction>
+): SideEffect<TState, TAction> | null {
+    switch (update.tag) {
+        case 'SideEffect':
+        case 'UpdateWithSideEffect':
+            return update.sideEffect
+        default:
+            return null
+    }
+}
