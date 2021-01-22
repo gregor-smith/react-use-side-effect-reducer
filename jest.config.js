@@ -1,5 +1,4 @@
-module.exports = {
+export default {
     testRegex: '\\.test\\.ts$',
-    preset: 'ts-jest',
-    testEnvironment: 'node'
+    preset: 'ts-jest'
 }

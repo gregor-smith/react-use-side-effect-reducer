@@ -101,7 +101,7 @@ function reducer(state: State, action: Action): Update<State, Action> {
         case 'LogMessage':
             return sideEffect(() => console.log(action.message))
         case 'NotYetImplemented':
-            return noUpdate()
+            return noUpdate
     }
 }
 
@@ -113,7 +113,6 @@ function App() {
     )
 
     // pass relevant state and the dispatch function to children
-    ...
 }
 ```
 </details>

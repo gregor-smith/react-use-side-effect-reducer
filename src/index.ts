@@ -1,6 +1,6 @@
 import { useEffect, useReducer, Dispatch } from 'react'
 
-export { Dispatch } from 'react'
+export type { Dispatch } from 'react'
 
 
 export type SideEffect<TState, TAction> = (
@@ -67,7 +67,7 @@ export function useSideEffectReducer<TState, TAction>(
     useEffect(
         () => {
             for (let index = 0; index < sideEffects.length; index++) {
-                sideEffects[index](dispatch, state)
+                sideEffects[index]!(dispatch, state)
             }
             sideEffects.length = 0
         },
