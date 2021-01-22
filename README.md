@@ -123,5 +123,3 @@ There's no NPM package for now, so you have to install directly from this reposi
 ```
 yarn add https://github.com/gregor-smith/react-use-side-effect-reducer.git
 ```
-
-Two versions are included in `/dist`: ES5 using `tslib` and CommonJS modules (the default), and ES2015 using ES2015 modules.
