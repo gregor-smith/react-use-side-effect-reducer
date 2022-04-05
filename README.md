@@ -4,9 +4,6 @@ A `useReducer`-like hook for React that can handle separate side effects. A simp
 
 
 ## Realistic example usage
-<details>
-<summary>Expand</summary>
-
 ```typescript
 import React from 'react'
 import {
@@ -115,7 +112,6 @@ function App() {
     // pass relevant state and the dispatch function to children
 }
 ```
-</details>
 
 ## Installation
 There's no NPM package for now, so you have to install directly from this repository:
