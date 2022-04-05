@@ -111,6 +111,17 @@ export function updateWithSideEffect<TState, TAction>(
 }
 
 
+export function getSideEffect(update: NoUpdate): null
+export function getSideEffect(update: RegularUpdate<any>): null
+export function getSideEffect<TState, TAction>(
+    update: SideEffectUpdate<TState, TAction>
+): SideEffect<TState, TAction>
+export function getSideEffect<TState, TAction>(
+    update: UpdateWithSideEffect<TState, TAction>
+): SideEffect<TState, TAction>
+export function getSideEffect<TState, TAction>(
+    update: Update<TState, TAction>
+): SideEffect<TState, TAction> | null
 export function getSideEffect<TState, TAction>(
     update: Update<TState, TAction>
 ): SideEffect<TState, TAction> | null {
