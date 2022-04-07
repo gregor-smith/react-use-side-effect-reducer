@@ -2,7 +2,6 @@
 
 A `useReducer`-like hook for React that can handle separate side effects. A simple alternative to Redux and its thunks and sagas and god knows what. Based on the reducer seen in [Reason React's now deprecated Record API](https://reasonml.github.io/reason-react/docs/en/state-actions-reducer#state-update-through-reducer).
 
-
 ## Realistic example usage
 ```typescript
 import React from 'react'
@@ -15,8 +14,7 @@ import {
     Update,
 } from 'react-use-side-effect-reducer'
 
-import api from './api'
-
+import api from './api.js'
 
 type RequestState<TOk, TError> =
     | { tag: 'Waiting' }
@@ -24,12 +22,10 @@ type RequestState<TOk, TError> =
     | { tag: 'Done', data: TOk }
     | { tag: 'Error', error: TError }
 
-
 type State = {
     searchQuery: string
     searchRequest: RequestState<string[], unknown>
 }
-
 
 type Action =
     | { tag: 'UpdateSearchQuery', query: string }
@@ -39,14 +35,12 @@ type Action =
     | { tag: 'LogMessage', message: string }
     | { tag: 'NotYetImplemented' }
 
-
 function createInitialState(): State {
     return {
         searchQuery: '',
         searchRequest: { tag: 'Waiting' }
     }
 }
-
 
 function reducer(state: State, action: Action): Update<State, Action> {
     switch (action.tag) {
@@ -101,7 +95,6 @@ function reducer(state: State, action: Action): Update<State, Action> {
             return noUpdate
     }
 }
-
 
 function App() {
     const [ state, dispatch ] = useSideEffectReducer(
